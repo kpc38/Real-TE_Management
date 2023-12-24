@@ -22,16 +22,12 @@ public class ApplicationController {
     private ApplicationService applicationService;
     private NotificationService notificationService;
 
-//    public ApplicationController(ApplicationService applicationService) {
-//        this.applicationService = applicationService;
-//    }
 
     public ApplicationController(ApplicationService applicationService, NotificationService notificationService) {
         this.applicationService = applicationService;
         this.notificationService = notificationService;
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @GetMapping("/applications/managing")
     public List<Application> getAllApplications(@Valid Principal principal) {
