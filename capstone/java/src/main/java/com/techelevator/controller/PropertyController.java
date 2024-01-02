@@ -27,8 +27,7 @@ public class PropertyController {
     }
 
     /**
-     * /properties
-
+     *
      * @return a list of properties that match the search parameters
      */
     @PreAuthorize("permitAll")

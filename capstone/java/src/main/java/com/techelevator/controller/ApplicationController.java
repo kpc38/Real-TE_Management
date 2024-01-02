@@ -21,13 +21,16 @@ import java.util.List;
 public class ApplicationController {
     private ApplicationService applicationService;
     private NotificationService notificationService;
-
-
     public ApplicationController(ApplicationService applicationService, NotificationService notificationService) {
         this.applicationService = applicationService;
         this.notificationService = notificationService;
     }
 
+    /**
+     *
+     * @param principal
+     * @return all applications for properties associated with user
+     */
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @GetMapping("/applications/managing")
     public List<Application> getAllApplications(@Valid Principal principal) {
@@ -38,6 +41,13 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param propertyId
+     * @return applications for properties owned by a property owner
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/applications/managing/{propertyId}")
     public List<Application> getAllApplicationsByPropertyId(@Valid Principal principal, @PathVariable("propertyId")
@@ -49,6 +59,12 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @return applications for a user(applicant)
+     */
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/applications")
     public List<Application> getMyApplications(@Valid Principal principal) {
@@ -59,6 +75,13 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param status
+     * @return applications by status
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/applications/status/{status}")
     public List<Application> getApplicationByStatus(@Valid Principal principal, @PathVariable("status") String status){
@@ -69,6 +92,13 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param applicationId
+     * @return application by id
+     */
     @GetMapping("/applications/{id}")
     public Application getApplicationById(@Valid Principal principal, @PathVariable("id") int applicationId){
         try{
@@ -81,6 +111,13 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param newApplication
+     * @return the new created application
+     */
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/applications")
     @ResponseStatus(HttpStatus.CREATED)
@@ -98,6 +135,12 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Delete an application by id
+     * @param principal
+     * @param applicationId
+     */
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("applications/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
