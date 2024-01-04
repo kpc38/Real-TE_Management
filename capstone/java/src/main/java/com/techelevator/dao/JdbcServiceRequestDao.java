@@ -14,11 +14,8 @@ import java.util.List;
 
 @Component
 public class JdbcServiceRequestDao implements ServiceRequestDao {
-
     private JdbcTemplate jdbcTemplate;
-
     private List<ServiceRequest> serviceRequests = new ArrayList<>();
-
     public JdbcServiceRequestDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -107,10 +104,6 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         return serviceRequest;
     }
 
-    //Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
-
-    // users (tenants) will see their requests by status
-    // admin will see all requests related to their properties
     @Override
     public List<ServiceRequest> getManagerServiceRequestsByStatus(String status, int id) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
@@ -159,7 +152,8 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         String sql = "INSERT INTO service_requests (tenant_id, request_details, status) " +
                 "VALUES (?, ?, ?) RETURNING service_request_id;";
         try {
-            int requestId = jdbcTemplate.queryForObject(sql, int.class, serviceRequest.getTenantId() , serviceRequest.getRequestDetails(), serviceRequest.getStatus());
+            int requestId = jdbcTemplate.queryForObject(sql, int.class, serviceRequest.getTenantId() ,
+                    serviceRequest.getRequestDetails(), serviceRequest.getStatus());
             return getTenantServiceRequestById(requestId, serviceRequest.getTenantId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -176,7 +170,8 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
                 "SET tenant_id = ?, request_details = ?, status = ? " +
                 "WHERE service_request_id = ?;";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, serviceRequest.getTenantId(), serviceRequest.getRequestDetails(), serviceRequest.getStatus(), serviceRequest.getServiceRequestId());
+            int rowsAffected = jdbcTemplate.update(sql, serviceRequest.getTenantId(), serviceRequest.getRequestDetails(),
+                    serviceRequest.getStatus(), serviceRequest.getServiceRequestId());
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
             } else {

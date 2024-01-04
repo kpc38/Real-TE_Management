@@ -151,6 +151,14 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param application
+     * @param applicationId
+     * @return updated application
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')") //TODO: send notification here ??????
     @PutMapping("/applications/update/{id}")
     public Application updateApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){

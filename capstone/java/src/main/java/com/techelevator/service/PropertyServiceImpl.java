@@ -16,11 +16,8 @@ import java.util.List;
 
 @Service
 public class PropertyServiceImpl implements PropertyService{
-
     private final PropertyDao propertyDao;
-
     private final UserDao userDao;
-
     public PropertyServiceImpl(PropertyDao propertyDao, UserDao userDao) {
         this.propertyDao = propertyDao;
         this.userDao = userDao;

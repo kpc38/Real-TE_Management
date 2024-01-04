@@ -24,6 +24,11 @@ public class RentTransactionController {
         this.rentTransactionService = rentTransactionService;
     }
 
+    /**
+     *
+     * @param principal
+     * @return rent transactions for properties owned by user
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/rent-transactions/managing")
     public List<RentTransaction> getAllRentTransactions(@Valid Principal principal){
@@ -34,6 +39,13 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param propertyId
+     * @return rent transactions associated with a property id
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/rent-transactions/managing/{propertyId}")
     public List<RentTransaction> getAllRentTransactionsPropertyId(@Valid Principal principal, @PathVariable("propertyId")
@@ -45,6 +57,12 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @return rent transactions associated with user
+     */
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/rent-transactions")
         public List<RentTransaction> getMyRentTransactions(@Valid Principal principal){
@@ -55,6 +73,13 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param isPastDue
+     * @return past due rents associated with properties user owns
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/rent-transactions/past-due/{boolean}")
     public List<RentTransaction> getRentTransactionsByPastDue(@Valid Principal principal, @PathVariable("boolean")
@@ -66,6 +91,13 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param rentTransactionId
+     * @return rent transaction by id
+     */
     @GetMapping("/rent-transactions/{id}")
     public RentTransaction getRentTransactionById(@Valid Principal principal, @PathVariable("id") int rentTransactionId){
         try{
@@ -78,6 +110,13 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param newRentTransaction
+     * @return created rent transactions
+     */
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/rent-transactions")
     @ResponseStatus(HttpStatus.CREATED)
@@ -95,6 +134,12 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Delete rent transaction
+     * @param principal
+     * @param rentTransactionId
+     */
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/rent-transactions/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -105,6 +150,14 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     *
+     * @param principal
+     * @param rentTransaction
+     * @param rentTransactionId
+     * @return updated rent transaction
+     */
     @PreAuthorize("hasRole('ROLE_USER')") //TODO: send notification here ??????
     @PutMapping("rent-transactions/update/{id}")
     public RentTransaction updateRentTransaction(@Valid Principal principal, @RequestBody RentTransaction rentTransaction,

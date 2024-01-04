@@ -13,11 +13,8 @@ import java.util.List;
 
 @Component
 public class JdbcRentTransactionDao implements RentTransactionDao {
-
     private JdbcTemplate jdbcTemplate;
-
     private List<RentTransaction> rentTransactions = new ArrayList<>();
-
     public JdbcRentTransactionDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -186,8 +183,6 @@ public class JdbcRentTransactionDao implements RentTransactionDao {
     @Override
     public RentTransaction updateRentTransaction(RentTransaction rentTransaction) {
         RentTransaction updatedRentTransaction = null;
-//        String sql = "UPDATE rent_transactions SET tenant_id = ?, amount = ?, due_date = ?, past_due = ? " +
-//                "WHERE transaction_id = ?;";
         String sql = "UPDATE rent_transactions SET amount = ?, past_due = ? " +
                 "WHERE transaction_id = ?;";
         try {

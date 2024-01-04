@@ -15,16 +15,11 @@ import java.util.List;
 
 @Component
 public class JdbcPropertyDao implements PropertyDao {
-
     private final JdbcTemplate jdbcTemplate;
-
     private final List<Property> properties = new ArrayList<>();
-
     public JdbcPropertyDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
-
     @Override
     public List<Property> getProperties() {
         List<Property> properties = new ArrayList<>();
@@ -106,7 +101,8 @@ public class JdbcPropertyDao implements PropertyDao {
         String sql = "INSERT INTO properties (manager_id, address, number_of_rooms, rent, is_available) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
         try {
-            newPropertyId = jdbcTemplate.queryForObject(sql, int.class, managerId, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable());
+            newPropertyId = jdbcTemplate.queryForObject(sql, int.class, managerId, property.getAddress(),
+                    property.getNumberOfRooms(), property.getRent(), property.isAvailable());
 
             return getPropertyById(newPropertyId);
         } catch (CannotGetJdbcConnectionException e) {
@@ -137,7 +133,6 @@ public class JdbcPropertyDao implements PropertyDao {
         return updatedProperty;
     }
 
-
     @Override
     public int deleteProperty(int propertyId, int managerId) {
         int rowsAffected;
@@ -152,9 +147,10 @@ public class JdbcPropertyDao implements PropertyDao {
         return rowsAffected;
     }
 
-
     private Property mapRowToProperty(SqlRowSet results) {
-        return new Property(results.getInt("property_id"), results.getInt("manager_id"), results.getString("address"), results.getInt("number_of_rooms"), results.getBigDecimal("rent"), results.getBoolean("is_available"));
+        return new Property(results.getInt("property_id"), results.getInt("manager_id"),
+                results.getString("address"), results.getInt("number_of_rooms"),
+                results.getBigDecimal("rent"), results.getBoolean("is_available"));
     }
 
 }
