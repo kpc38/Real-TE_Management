@@ -2,6 +2,7 @@ package com.techelevator.model;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class ServiceRequest {
     private int serviceRequestId;
@@ -53,5 +54,28 @@ public class ServiceRequest {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ServiceRequest that = (ServiceRequest) o;
+        return serviceRequestId == that.serviceRequestId && tenantId == that.tenantId && Objects.equals(requestDetails, that.requestDetails) && Objects.equals(status, that.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serviceRequestId, tenantId, requestDetails, status);
+    }
+
+    @Override
+    public String toString() {
+        return "ServiceRequest{" +
+                "serviceRequestId=" + serviceRequestId +
+                ", tenantId=" + tenantId +
+                ", requestDetails='" + requestDetails + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

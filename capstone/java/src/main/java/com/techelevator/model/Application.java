@@ -4,6 +4,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class Application {
 
@@ -109,5 +110,32 @@ public class Application {
 
     public void setRoomateNames(String roomateNames) {
         this.roomateNames = roomateNames;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Application that = (Application) o;
+        return applicationId == that.applicationId && userId == that.userId && propertyId == that.propertyId && isAbove18 == that.isAbove18 && hasRoomates == that.hasRoomates && Objects.equals(status, that.status) && Objects.equals(fullName, that.fullName) && Objects.equals(email, that.email) && Objects.equals(roomateNames, that.roomateNames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(applicationId, userId, propertyId, status, fullName, email, isAbove18, hasRoomates, roomateNames);
+    }
+
+    @Override
+    public String toString() {
+        return "Application{" +
+                "applicationId=" + applicationId +
+                ", userId=" + userId +
+                ", propertyId=" + propertyId +
+                ", status='" + status + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", isAbove18=" + isAbove18 +
+                ", hasRoomates=" + hasRoomates +
+                ", roomateNames='" + roomateNames + '\'' +
+                '}';
     }
 }
