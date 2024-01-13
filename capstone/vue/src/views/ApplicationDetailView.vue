@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <application-detail v-bind:application="application"/>
-  </div>
+    <div>
+        <application-detail v-bind:application="application" />
+    </div>
 </template>
 
 <script>
@@ -12,26 +12,24 @@ export default {
     components: {
         ApplicationDetail
     },
-    data(){
+    data() {
         return {
             application: {
 
             },
         }
     },
-    created(){
+    created() {
         applicationService
-        .getApplicationById(this.$route.params.applicationId)
-        .then(response => {
-            this.application = response.data;
-        });
+            .getApplicationById(this.$route.params.applicationId)
+            .then(response => {
+                this.application = response.data;
+            });
         if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
-        this.$store.commit('SET_SHOW_MANAGER_POV', true);
+            this.$store.commit('SET_SHOW_MANAGER_POV', true);
         }
     }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

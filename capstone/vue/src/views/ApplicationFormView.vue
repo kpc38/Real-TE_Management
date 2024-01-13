@@ -2,7 +2,7 @@
 <template>
   <div class="application-header">
     <header>Real-TE Tenant Application</header>
-    <application-form v-bind:application="application"/>
+    <application-form v-bind:application="application" />
   </div>
 </template>
 
@@ -10,25 +10,23 @@
 import ApplicationForm from '../components/ApplicationForm.vue';
 
 export default {
-    components: {
-        ApplicationForm
-    },
-    data() {
-      return {
-        application: {
-          applicationId: 0,
-          propertyId: 0,
-          fullName: '',
-          email: '',
-          hasRoomates: false,
-          roomateNames: '',
-          status: 'STATUS_PENDING'
-        }
+  components: {
+    ApplicationForm
+  },
+  data() {
+    return {
+      application: {
+        applicationId: 0,
+        propertyId: 0,
+        fullName: '',
+        email: '',
+        hasRoomates: false,
+        roomateNames: '',
+        status: 'STATUS_PENDING'
       }
     }
+  }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
