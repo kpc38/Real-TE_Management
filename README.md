@@ -10,9 +10,10 @@ Real-Te Management streamlines property ownership by providing a user-friendly i
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
+- [Frontend](#frontend)
 - [API](#api)
 - [Database Schema](#database-schema)
-- [Frontend](#frontend)
+
 
 ## Dependencies
 Frontend:
@@ -49,6 +50,8 @@ List and describe the key features of your project. This section helps users qui
 - Feature 2: [Description]
 - ...
 
+## Frontend
+
 ## API 
 
 Link to or provide information about the documentation for your project. This could include API documentation, user guides, or any other relevant materials. If your project has an associated website, mention it here.
@@ -56,6 +59,4 @@ Link to or provide information about the documentation for your project. This co
 ## Database Schema
 
 ![Database schema](capstone/java/img/Capstone ERD.png)
-
-## Frontend
 
